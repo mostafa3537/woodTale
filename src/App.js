@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import HomePage from "./pages/homePage/homePage";
 import ShopPage from "./pages/shopPage/shopPage";
@@ -17,7 +17,6 @@ class App extends React.Component {
 
   componentDidMount() {
     const { setCurrentUser } = this.props;
-    console.log("setCurrentUser", setCurrentUser);
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
@@ -29,7 +28,7 @@ class App extends React.Component {
           });
         });
       } else {
-        setCurrentUser({ currentUser: userAuth });
+        setCurrentUser(userAuth);
       }
     });
   }
@@ -38,13 +37,29 @@ class App extends React.Component {
     this.unsubscribeFromAuth();
   }
   render() {
+    // // const navigate = useNavigate();
+    // if(this.props.currentUser){
+    //   let shouldRedirect = true; 
+    // }else{
+    //   shouldRedirect = false
+    // }
     return (
       <div>
         <Header />
         <Routes>
           <Route exact path="/" element={<HomePage />} />
-          <Route path="/shop" element={<ShopPage />} />
-          <Route path="/signin" element={<SignInAndSignUpPage />} />
+          <Route exact path="/shop" element={<ShopPage />} />
+          <Route
+            exact
+            path="/signin"
+            element={
+              this.props.currentUser ? (
+                <Navigate replace to="/" />
+              ) : (
+                <SignInAndSignUpPage />
+              )
+            }
+          />
         </Routes>
       </div>
     );
@@ -61,4 +76,8 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(App);
+const mapStateToProps = ({ user }) => ({
+  currentUser: user.currentUser,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
