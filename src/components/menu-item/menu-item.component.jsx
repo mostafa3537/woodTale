@@ -8,7 +8,6 @@ const MenuItem = ({ title, size, id, imageUrl, linkUrl }) => {
 
   return (
     <div className={`menu-item ${size} `} onClick={() => navigate(`${linkUrl}`)}>
-    {/* <div className={`menu-item ${size} `} onClick={() => console.log({linkUrl, size, title, imageUrl})}> */}
       <div
         className="background-image"
         style={{ backgroundImage: `url(${imageUrl})` }}

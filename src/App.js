@@ -5,7 +5,16 @@ import HomePage from "./pages/homePage/homePage";
 import ShopPage from "./pages/shopPage/shopPage";
 import Header from "./components/header/header.component";
 import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component";
-import setCurrentUser from "./redux/user/user.action";
+import CheckoutPage from "./pages/checkout/checkout.component";
+import { createStructuredSelector } from "reselect";
+
+import { setCurrentUser } from "./redux/user/user.actions";
+import { selectCurrentUser } from "../src/redux/user/user.selectors";
+
+import { selectCartHidden } from "../src/redux/cart/cart.selectors";
+
+import { toggleCartHidden } from "../src/redux/cart/cart.actions";
+
 import { connect } from "react-redux";
 
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
@@ -37,18 +46,21 @@ class App extends React.Component {
     this.unsubscribeFromAuth();
   }
   render() {
-    // // const navigate = useNavigate();
-    // if(this.props.currentUser){
-    //   let shouldRedirect = true; 
-    // }else{
-    //   shouldRedirect = false
-    // }
+    const { toggleCartHidden } = this.props;
+    const { hidden } = this.props;
     return (
-      <div>
+      <div
+        onClick={() => {
+          if (hidden === false) {
+            toggleCartHidden();
+          }
+        }}
+      >
         <Header />
         <Routes>
           <Route exact path="/" element={<HomePage />} />
           <Route exact path="/shop" element={<ShopPage />} />
+          <Route exact path="/checkout" element={<CheckoutPage />} />
           <Route
             exact
             path="/signin"
@@ -67,17 +79,17 @@ class App extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  // console.log("dispatch", dispatch);
   return {
     setCurrentUser: (user) => {
       dispatch(setCurrentUser(user));
-      // console.log("setCurrentUser", setCurrentUser);
     },
+    toggleCartHidden: () => dispatch(toggleCartHidden()),
   };
 };
 
-const mapStateToProps = ({ user }) => ({
-  currentUser: user.currentUser,
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+  hidden: selectCartHidden,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

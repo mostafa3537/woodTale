@@ -1,6 +1,6 @@
 import React from "react";
 import CollectionItem from "../coolection-item/collection-item.component";
-import './collectionPreview.componnent.scss'
+import "./collectionPreview.componnent.scss";
 
 export const CollectionPreview = ({ title, items }) => {
   return (
@@ -8,9 +8,9 @@ export const CollectionPreview = ({ title, items }) => {
       <h1 className="title">{title.toUpperCase()}</h1>
       <div className="preview">
         {items
-          .filter((collection, index) => index < 4)
-          .map(({id, ...otherProps}) => (
-            <CollectionItem key={id} {...otherProps} />
+          .filter((item, idx) => idx < 4)
+          .map((item) => (
+            <CollectionItem key={item.id} item={item} />
           ))}
       </div>
     </div>
