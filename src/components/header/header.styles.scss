@@ -4,6 +4,9 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 25px;
+  font-size: large;
+  border-bottom: 1px solid #f3f3f3;
+  color: #7e858b;
 
   .logo-container {
     height: 100%;
@@ -17,10 +20,47 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    gap: 5vw;
 
     .option {
       padding: 10px 15px;
       cursor: pointer;
+    }
+  }
+}
+
+.shop-page {
+  // transition-delay: 20s;
+  .drop-down {
+    display: none;
+    width: 100px;
+    border: 1px;
+    cursor: pointer;
+    position: fixed;
+    background-color: white;
+    box-shadow: 15px;
+    font-size: large;
+    padding: 10px 15px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    top: 90px;
+    z-index: 10;
+    right: 450px;
+
+    .category {
+      padding: 5px 5px;
+      display: block;
+      transition-property: display !important;
+      transition-duration: 5s !important;
+    }
+  }
+
+  &:hover {
+    .drop-down {
+      display: block;
+      transition-property: display !important;
+      transition-duration: 5s !important;
     }
   }
 }

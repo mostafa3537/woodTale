@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 import HomePage from "./pages/homePage/homePage";
 import ShopPage from "./pages/shopPage/shopPage";
+import CollectionPage from "./pages/collection/collection.component";
 import Header from "./components/header/header.component";
 import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component";
 import CheckoutPage from "./pages/checkout/checkout.component";
@@ -45,9 +46,17 @@ class App extends React.Component {
   componentWillUnmount() {
     this.unsubscribeFromAuth();
   }
+  // elements = [
+  //   { path: "hats", id: 0 },
+  //   { path: "Sneakers", id: 1 },
+  //   { path: "Jackets", id: 2 },
+  //   { path: "Womens", id: 3 },
+  //   { path: "Mens", id: 4 },
+  // ];
   render() {
     const { toggleCartHidden } = this.props;
     const { hidden } = this.props;
+
     return (
       <div
         onClick={() => {
@@ -59,7 +68,11 @@ class App extends React.Component {
         <Header />
         <Routes>
           <Route exact path="/" element={<HomePage />} />
-          <Route exact path="/shop" element={<ShopPage />} />
+
+          <Route path="/shop" element={<ShopPage />}>
+          <Route path=":id" element={<CollectionPage/>} />
+          </Route>
+
           <Route exact path="/checkout" element={<CheckoutPage />} />
           <Route
             exact
