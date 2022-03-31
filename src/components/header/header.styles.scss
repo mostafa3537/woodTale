@@ -64,3 +64,8 @@
     }
   }
 }
+.options {
+  &:hover {
+    transition-delay: 3s !important;
+  }
+}
