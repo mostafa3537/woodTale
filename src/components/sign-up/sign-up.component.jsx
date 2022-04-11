@@ -5,7 +5,6 @@ import { emailValidator } from "../../utiles/regex";
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
 import { axiosInstace } from "../../network/axiosConfig";
-// import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
 
 import "./sign-up.styles.scss";
 
@@ -29,33 +28,24 @@ class SignUp extends React.Component {
     event.preventDefault();
 
     const {
-      // name,
-      // email,
-      // password,
-      // passwordConfirm,
       nameError,
       emailError,
       passwordError,
       passwordConfirmError,
     } = this.state;
 
-    // if (password !== passwordConfirm) {
-    //   alert("passwords don't match");
-    //   return;
-    // }
-
     if (!nameError && !emailError && !passwordError && !passwordConfirmError) {
       try {
         axiosInstace.post("users/signup", this.state).then((response) => {
           console.log("response", response.data.status);
           localStorage.setItem("user_token", response.data.token);
-          // if(response.data.status==="success){
-          
-          // }
+          if(response.data.status==="success"){
+          window.location.replace("/")
+          }
         });
         this.setState({
           name: "",
-          email: "",
+          email: "", 
           password: "",
           passwordConfirm: "",
           nameError: "",
