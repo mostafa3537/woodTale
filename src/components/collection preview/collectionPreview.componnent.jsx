@@ -1,5 +1,5 @@
 import React from "react";
-import CollectionItem from "../coolection-item/collection-item.component";
+import CollectionItem from "../collection-item/collection-item.component";
 import "./collectionPreview.componnent.scss";
 
 export const CollectionPreview = ({ title, items }) => {
